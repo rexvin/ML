@@ -1,0 +1,28 @@
+#Multireg
+from pandas import DataFrame
+import matplotlib.pyplot as plt
+from sklearn import linear_model
+import numpy as np
+import pandas as pd
+# Reading Data
+data = pd.read_csv('HousePrice.csv')
+print(data)
+df = DataFrame(data,columns=['X1','X2','Y'])
+#plt.scatter(df['X1'], df['Y'], color='red')
+#plt.title('Y Vs X1', fontsize=14)
+#plt.xlabel('X1', fontsize=14)
+#plt.ylabel('Y', fontsize=14)
+#plt.grid(True)
+#plt.show()
+X = df[['X1','X2']] # here we have 2 variables for multiple regression. If you just want to use one variable for simple linear regression, then use X = df['Interest_Rate'] for example.Alternatively, you may add additional variables within the brackets
+Y = df['Y']
+regr = linear_model.LinearRegression()
+regr.fit(X, Y)
+
+#print('Intercept: \n', regr.intercept_)
+#print('Coefficients: \n', regr.coef_)
+
+# prediction with sklearn
+New_X1 = 2.75
+New_X2 = 5.3
+print ('Predicted Y: \n', regr.predict([[New_X1 ,New_X2]]))

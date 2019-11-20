@@ -1,0 +1,25 @@
+#logistic
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.model_selection import train_test_split
+from google.colab import files
+uploaded = files.upload()
+d=pd.read_csv("insurance.csv")
+
+X = d.iloc[:, :-1].values
+y = d.iloc[:, 4].values
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1,random_state=2)
+logreg = LogisticRegression()
+logreg.fit(X_train,y_train)
+y_pred=logreg.predict(X_test)
+cnf_matrix = confusion_matrix(y_test, y_pred)
+print(cnf_matrix)
+
+print("Accuracy:",accuracy_score(y_test, y_pred)*100)
+
+print(classification_report(y_test, y_pred))

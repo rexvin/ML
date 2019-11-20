@@ -1,0 +1,32 @@
+#decisiontree
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from sklearn.tree import DecisionTreeClassifier
+from sklearn import tree
+import pydotplus
+import numpy as np
+from google.colab import files
+uploaded = files.upload()
+d=pd.read_csv("insurance.csv")
+le=LabelEncoder()
+d[d.columns[4]]=le.fit_transform(d[d.columns[4]])
+X = d.iloc[:, :-1].values
+Y = d.iloc[:, 4].values
+
+X_train,X_test,Y_train,Y_test=train_test_split(X,Y,test_size=0.2,random_state=100)
+clf_entropy=DecisionTreeClassifier(criterion="entropy",random_state=100)
+clf_entropy.fit(X_train,Y_train)
+y_pred=clf_entropy.predict(X_test)
+print(accuracy_score(y_pred,Y_test)*100)
+
+print(y_pred)
+print(Y_test)
+
+cnf_matrix = confusion_matrix(Y_test, y_pred)
+print(cnf_matrix)
+
+print("Accuracy:",accuracy_score(Y_test, y_pred)*100)
+
+print(classification_report(Y_test, y_pred))
